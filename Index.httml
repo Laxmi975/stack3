@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stack Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .controls {
+            margin: 20px;
+        }
+
+        input {
+            padding: 8px;
+            width: 120px;
+        }
+
+        button {
+            padding: 8px 15px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .stack-container {
+            margin: 20px auto;
+            width: 200px;
+            border: 2px solid #000;
+            padding: 10px;
+            background-color: #fff;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        .stack-item {
+            border: 1px solid #000;
+            padding: 10px;
+            margin: 3px 0;
+            background-color: lightblue;
+        }
+
+        .message {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Stack Operations Visualization</h1>
+
+    <div class="controls">
+        <input type="text" id="stackValue" placeholder="Enter value">
+        <br><br>
+        <button onclick="push()">PUSH</button>
+        <button onclick="pop()">POP</button>
+    </div>
+
+    <div class="stack-container" id="stack"></div>
+
+    <p class="message" id="message"></p>
+
+    <script>
+        let stack = [];
+        let maxSize = 5;
+
+        function push() {
+            let value = document.getElementById("stackValue").value;
+            let message = document.getElementById("message");
+
+            if (value === "") {
+                message.textContent = "Please enter a value!";
+                return;
+            }
+
+            if (stack.length >= maxSize) {
+                message.textContent = "Stack Overflow!";
+                return;
+            }
+
+            stack.push(value);
+            document.getElementById("stackValue").value = "";
+            message.textContent = "";
+            displayStack();
+        }
+
+        function pop() {
+            let message = document.getElementById("message");
+
+            if (stack.length === 0) {
+                message.textContent = "Stack Underflow!";
+                return;
+            }
+
+            stack.pop();
+            message.textContent = "";
+            displayStack();
+        }
+
+        function displayStack() {
+            let stackDiv = document.getElementById("stack");
+            stackDiv.innerHTML = "";
+
+            for (let i = 0; i < stack.length; i++) {
+                let div = document.createElement("div");
+                div.className = "stack-item";
+                div.textContent = stack[i];
+                stackDiv.appendChild(div);
+            }
+        }
+    </script>
+
+</body>
+</html>
